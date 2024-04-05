@@ -7,6 +7,7 @@
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=dresende&url=https://github.com/dresende/node-orm2&title=ORM&language=&tags=github&category=software)
 
 ## This package is not actively maintained
+## I have forked original to make it work for one of my personal projects with MySql 8.2
 
 If you're starting a new project, consider using one of the following instead as they have a more active community:
 * https://github.com/typeorm/typeorm
