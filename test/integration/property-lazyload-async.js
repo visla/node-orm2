@@ -5,8 +5,8 @@ var ORM      = require('../../');
 describe("LazyLoad Async properties", function() {
   var db = null;
   var Person = null;
-  var PersonPhoto = new Buffer(1024); // fake photo
-  var OtherPersonPhoto = new Buffer(1024); // other fake photo
+  var PersonPhoto = Buffer.alloc(1024); // fake photo
+  var OtherPersonPhoto = Buffer.alloc(1024); // other fake photo
 
   var setup = function () {
     return function (done) {

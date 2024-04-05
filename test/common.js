@@ -60,6 +60,7 @@ common.parseConnectionString = function (connString) {
 };
 
 common.getConnectionString = function (opts) {
+  opts = _.cloneDeep(opts)
   let protocol = this.protocol();
   const dbEnvVar = `${protocol.toUpperCase()}_DB_URL`;
   const dbEnvConnString = process.env[dbEnvVar];

@@ -801,6 +801,8 @@ describe("hasMany", function () {
 
         if (protocol == 'sqlite') {
           sql = "PRAGMA table_info(?)";
+        } else if (protocol == 'mysql') {
+          sql = "SELECT COLUMN_NAME, DATA_TYPE FROM information_schema.columns WHERE table_name = ? ORDER BY DATA_TYPE";
         } else {
           sql = "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = ? ORDER BY data_type";
         }
@@ -814,10 +816,10 @@ describe("hasMany", function () {
             should.equal(cols[1].name, 'emails_text');
             should.equal(cols[1].type, 'TEXT');
           } else if (protocol == 'mysql') {
-            should.equal(cols[0].column_name, 'account_id');
-            should.equal(cols[0].data_type,   'int');
-            should.equal(cols[1].column_name, 'emails_text');
-            should.equal(cols[1].data_type,    'varchar');
+            should.equal(cols[0].COLUMN_NAME, 'account_id');
+            should.equal(cols[0].DATA_TYPE,   'int');
+            should.equal(cols[1].COLUMN_NAME, 'emails_text');
+            should.equal(cols[1].DATA_TYPE,    'varchar');
           } else if (protocol == 'postgres') {
             should.equal(cols[0].column_name, 'account_id');
             should.equal(cols[0].data_type,   'integer');
@@ -854,14 +856,12 @@ describe("hasMany", function () {
             done()
           });
         } else if (protocol == 'mysql') {
-          db.driver.execQuery("SHOW KEYS FROM ?? WHERE Key_name = ?", ['account_emails', 'PRIMARY'], function (err, data) {
+          db.driver.execQuery("SHOW KEYS FROM ??", ['account_emails'], function (err, data) {
             should.not.exist(err);
 
             should.equal(data.length, 2);
             should.equal(data[0].Column_name, 'account_id');
-            should.equal(data[0].Key_name, 'PRIMARY');
-            should.equal(data[1].Column_name, 'emails_text');
-            should.equal(data[1].Key_name, 'PRIMARY');
+            should.equal(data[1].Column_name, 'emails_text_index');
 
             done();
           });

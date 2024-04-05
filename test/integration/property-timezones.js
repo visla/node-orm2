@@ -36,7 +36,7 @@ describe("Timezones", function() {
   };
 
   describe("specified", function () {
-    var a, zones = [ 'local', '-0734'/*, '+11:22'*/ ];
+    var a, zones = [ 'local', '-07:34'/*, '+11:22'*/ ];
 
     for (a = 0; a < zones.length; a++ ) {
       describe(zones[a], function () {
@@ -47,7 +47,7 @@ describe("Timezones", function() {
         });
 
         it("should get back the same date that was stored", function (done) {
-          var when = new Date(2013, 12, 5, 5, 34, 27);
+          var when = new Date(2014, 0, 5, 5, 34, 27);
 
           Event.create({ name: "raid fridge", when: when }, function (err) {
             should.not.exist(err);
@@ -67,7 +67,7 @@ describe("Timezones", function() {
   describe("different for each connection", function () {
     before(setup({
       sync  : true,
-      query : { timezone: '+0200' }
+      query : { timezone: '+02:00' }
     }));
 
     after(function () {
@@ -89,7 +89,7 @@ describe("Timezones", function() {
           db.close(function () {
             setup({
               sync  : false, // don't recreate table, don't want to loose previous value
-              query : { timezone: '+0400' }
+              query : { timezone: '+04:00' }
             })(function () {
               Event.one({ name: "raid fridge" }, function (err, item) {
                 var expected = new Date(2013, 12, 5, 3, 34, 27);
